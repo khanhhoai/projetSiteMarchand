@@ -1,0 +1,47 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 20px;
+  background-color: #333; 
+  color: #fff; 
+}     
+                                              
+.links {
+  margin-right: 50px;
+  display: flex;
+  align-items: center; 
+}
+
+.links a {
+  text-decoration: none;
+  color: white;
+  margin-left: 18px;
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+.links a:hover {
+  color: #bbbaba;
+}
+
+.links svg {
+  color: #fff;
+  transition: color 0.3s ease;
+}
+
+.links svg:hover {
+  color: #bbbaba;
+}
+
+.navbar-left {
+  display: flex;
+  align-items: center;
+}
+
+.shop-name {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  color: #fff;
+  text-decoration: none;
+}

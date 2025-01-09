@@ -1,0 +1,47 @@
+.App {
+  width: 100%;
+  height: auto;
+  min-height: 100vh;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1; 
+}
+
+
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f9; /* Màu nền nhẹ */
+  color: #333;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  text-align: center;
+  margin: 20px 0;
+  font-size: 32px;
+  color: #333;
+}
+
+.shop-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 20px;
+  gap: 20px;
+}
