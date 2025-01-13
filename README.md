@@ -38,3 +38,5 @@
   - Account admin (email: admin@gmail.com, password: admin)
   - Account seller (email: seller@apple.com, password: 12345)
   - Account user (email: hoaimifa@gmail.com, password: 12345)
+
+## Rapport Projet Web Avancée 
