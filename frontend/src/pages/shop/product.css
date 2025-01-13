@@ -1,0 +1,84 @@
+.product {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  
+}
+
+.product-container > div {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 15px; 
+  padding: 20px;
+}
+
+.product:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.product img {
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  object-fit: contain;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.product .description {
+  margin-bottom: 15px;
+}
+
+.product .description p {
+  margin: 5px 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.product .description p b {
+  font-size: 18px;
+  color: #000;
+}
+
+.buttonContainer_class {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.addToCartBttn,
+.buyBttn_class {
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  padding: 10px 15px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.addToCartBttn:hover,
+.buyBttn:hover {
+  background-color: #555;
+}
+
+.addToCartBttn {
+  background-color: #007bff;
+}
+
+.addToCartBttn:hover {
+  background-color: #0056b3;
+}
+
+.buyBttn_class {
+  background-color: #28a745;
+}
+
+.buyBttn_class:hover {
+  background-color: #218838;
+}

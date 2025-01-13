@@ -1,60 +1,96 @@
+
 .cart {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 20px;
+  background-color: #f9f9f9; /* Light background for better contrast */
 }
 
+/* Individual Cart Item */
 .cartItem {
   width: 700px;
   height: 250px;
   display: flex;
-
   align-items: center;
   box-shadow: 0px 3px 15px rgba(0, 0, 0, 0.2);
   border-radius: 25px;
-  margin: 30px;
+  background-color: #fff; /* White background for card-like design */
+  margin: 20px 0; /* Reduce margin for better spacing */
+  padding: 15px; /* Add padding for inner spacing */
 }
 
+/* Product Image */
 .cartItem img {
   width: 200px;
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 10px; /* Smooth corners for the image */
+  object-fit: cover; /* Ensure image fits nicely */
 }
 
+/* Product Description */
 .cartItem .description {
   width: 100%;
-  font-size: 30px;
+  padding-left: 20px; /* Add spacing between image and text */
+  font-size: 18px;
+  color: #333; /* Neutral text color */
+}
+
+.cartItem .description p {
+  margin: 5px 0;
+}
+
+.cartItem .description b {
+  font-size: 20px;
+}
+
+/* Count Handler */
+.countHandler {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .countHandler input {
-  width: 40px;
+  width: 50px;
+  height: 30px;
   text-align: center;
-  font-weight: bolder;
+  font-weight: bold;
+  margin: 0 10px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
 }
 
-.checkout button {
-  width: 150px;
-  height: 50px;
-  background-color: rgb(19, 19, 19);
+.countHandler button {
+  width: 40px;
+  height: 30px;
+  font-size: 18px;
+  background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 8px;
-  margin: 10px;
+  border-radius: 10px;
   cursor: pointer;
 }
 
-.buyBttn {
-  width: 100px;
-  height: 40px;
-  background-color: rgb(19, 19, 19);
+.countHandler button:hover {
+  background-color: #0056b3;
+}
+
+/* Checkout Buttons */
+.checkout_class button {
+  padding: 10px 15px;
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 15px;
+  margin: 10px;
   cursor: pointer;
+  font-size: 14px;
 }
-.buttonContainer {
-  display: flex;
-  gap: 10px; /* Adds space between the buttons */
+
+.checkout_class button:hover {
+  background-color: #0056b3;
 }
-.buyBttn {
-  background-color: black; /* Different color for distinction */
-}
+

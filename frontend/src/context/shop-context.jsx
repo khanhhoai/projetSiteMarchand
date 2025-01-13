@@ -1,25 +1,41 @@
 import { createContext, useEffect, useState } from "react";
-import { PRODUCTS } from "../products";
+import axios from "axios";
 
 export const ShopContext = createContext(null);
 
-
-const getDefaultCart = () => {
+const getDefaultCart = (products) => {
   let cart = {};
-  for (let i = 1; i < PRODUCTS.length + 1; i++) {
-    cart[i] = 0;
-  }
+  products.forEach((product) => {
+    cart[product.id] = 0;
+  });
   return cart;
 };
 
 export const ShopContextProvider = (props) => {
-  const [cartItems, setCartItems] = useState(getDefaultCart());
+  const [products, setProducts] = useState([]);
+  const [cartItems, setCartItems] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [orders, setOrders] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5000/products")
+      .then((response) => {
+        setProducts(response.data);
+        setCartItems(getDefaultCart(response.data));
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching products:", error);
+        setLoading(false);
+      });
+  }, []);
 
   const getTotalCartAmount = () => {
     let totalAmount = 0;
     for (const item in cartItems) {
       if (cartItems[item] > 0) {
-        let itemInfo = PRODUCTS.find((product) => product.id === Number(item));
+        let itemInfo = products.find((product) => product.id === Number(item));
         totalAmount += cartItems[item] * itemInfo.price;
       }
     }
@@ -34,22 +50,43 @@ export const ShopContextProvider = (props) => {
     setCartItems((prev) => ({ ...prev, [itemId]: prev[itemId] - 1 }));
   };
 
+  const emptyCart = () => {
+    setCartItems({});
+  };
+
   const updateCartItemCount = (newAmount, itemId) => {
     setCartItems((prev) => ({ ...prev, [itemId]: newAmount }));
   };
 
+  const reserveOrder = () => {
+    const orderDetails = Object.keys(cartItems)
+      .filter((id) => cartItems[id] > 0)
+      .map((id) => ({
+        id: id,
+        quantity: cartItems[id],
+        ...products.find((product) => product.id === Number(id)),
+        status: "pending", // Default status
+      }));
+
+    setOrders([...orders, ...orderDetails]); // Add order to orders list
+    setCartItems({}); // Clear cart
+  };
+
   const checkout = () => {
-    setCartItems(getDefaultCart());
+    setCartItems(getDefaultCart(products));
   };
 
   const contextValue = {
+    products,
     cartItems,
     addToCart,
     updateCartItemCount,
     removeFromCart,
     getTotalCartAmount,
+    reserveOrder,
     checkout,
-
+    loading,
+    emptyCart,
   };
 
   return (
@@ -58,4 +95,3 @@ export const ShopContextProvider = (props) => {
     </ShopContext.Provider>
   );
 };
-

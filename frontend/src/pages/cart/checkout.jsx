@@ -1,51 +1,80 @@
-import React from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-
-import "./cart.css"; // Reusing the same CSS for consistency
+import React, { useContext } from "react";
+import { ShopContext } from "../../context/shop-context";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "./checkout.css";
 
 export const Checkout = () => {
-  const location = useLocation();
+  const { cartItems, getTotalCartAmount, products, emptyCart } =
+    useContext(ShopContext);
+  const totalAmount = getTotalCartAmount();
   const navigate = useNavigate();
 
-  // Access the product details passed via the "Buy Now" button
-  const product = location.state?.product;
+  const handleReserveOrder = async () => {
+    try {
+      const user = JSON.parse(localStorage.getItem("user"));
+      const userId = user?.id;
 
-  if (!product) {
-    // If no product is passed, redirect back to the shop
-    navigate("/");
-    return null;
-  }
+      const orderProducts = products
+        .filter((product) => cartItems[product.id] > 0)
+        .map((product) => ({
+          id_product: product.id,
+          name: product.name,
+          quantity: cartItems[product.id],
+          price: product.price,
+          id_seller: product.sellerId,
+          status: "pending",
+        }));
 
-  const handlePayment = () => {
-    alert("Proceeding to payment...");
-    navigate("/"); // Redirect back to the shop or payment gateway
+      await axios.post("http://localhost:5000/orders", {
+        userId,
+        products: orderProducts,
+        totalPrice: totalAmount,
+      });
+
+      emptyCart();
+
+      navigate("/my-orders");
+    } catch (error) {
+      console.error("Failed to create order:", error);
+      alert("Something went wrong. Please try again!");
+    }
   };
 
   return (
-    <div className="cart">
-      <div>
-        <h1>Checkout</h1>
+    <div className="checkout">
+      <h1>Order Summary</h1>
+
+      <div className="order-details">
+        {products.map((product) => {
+          if (cartItems[product.id] > 0) {
+            return (
+              <div key={product.id} className="order-item">
+                <img
+                  src={
+                    product.image || "https://img.freepik.com/premium-vector/default-image-icon-vector-missing-picture-page-website-design-mobile-app-no-photo-available_87543-11093.jpg"
+                  }
+                  alt={product.name}
+                  className="product-image"
+                />
+                <p>{product.name}</p>
+                <p>Quantity: {cartItems[product.id]}</p>
+                <p>Price: ${product.price * cartItems[product.id]}</p>
+              </div>
+            );
+          }
+          return null;
+        })}
       </div>
-      <div className="cart">
-        {/* Render the product details */}
-        <div className="cartItem">
-          <img src={product.productImage} alt={product.productName} />
-          <div className="description">
-            <p>
-              <b>{product.productName}</b>
-            </p>
-            <p>Price: ${product.price}</p>
-            <div className="countHandler">
-              <p>Quantity: 1</p>
-            </div>
-          </div>
-        </div>
+
+      <div className="total">
+        <h2>Total Amount: ${totalAmount}</h2>
       </div>
-      <div className="checkout">
-        <p> Total: ${product.price} </p>
-        <button onClick={() => navigate("/")}> Continue Shopping </button>
-        <button onClick={handlePayment}> Proceed to Payment </button>
+
+      <div className="actions">
+        <button onClick={() => navigate("/cart")}>Back to Cart</button>
+        <button onClick={handleReserveOrder}>Confirm Order</button>
       </div>
     </div>
   );
-}; 
+};
